@@ -220,6 +220,15 @@ body::before{
   opacity: 0.5;
 }
 
+/* Onglet parrainage */
+.nav{mix-blend-mode:normal;background:linear-gradient(180deg,rgba(43,20,16,.92),rgba(43,20,16,0));}
+.nav-logo{text-decoration:none;}
+.nav-menu{align-items:center;}
+.nav-menu a.nav-tab{background:var(--terracotta-2);color:#fff;padding:9px 14px;border-radius:999px;font-weight:500;}
+.nav-menu a.nav-tab::before{content:"✦";opacity:1;margin-right:6px;}
+.nav-menu a.nav-tab:hover{opacity:1;background:var(--rust);}
+@media (max-width:900px){.nav{padding:14px 18px;}.nav .nav-menu{display:flex !important;}.nav-menu li:not(.keep){display:none;}}
+
 /* ====== HERO ====== */
 .hero{
   min-height: 100vh;
@@ -2590,6 +2599,18 @@ body.sponsor-open{overflow: hidden;}
   </div>
 </div>
 
+<!-- NAV -->
+<nav class="nav" aria-label="Navigation principale">
+  <a href="./" class="nav-logo" data-cursor="expand">4L <em>Sans Freins</em></a>
+  <ul class="nav-menu">
+    <li><a href="#mission" data-cursor="expand">Mission</a></li>
+    <li><a href="#parcours" data-cursor="expand">Parcours</a></li>
+    <li><a href="#equipe" data-cursor="expand">Équipage</a></li>
+    <li><a href="#soutien" data-cursor="expand">Soutenir</a></li>
+    <li class="keep"><a href="parrainage/" class="nav-tab" data-cursor="expand">Parrainer un km</a></li>
+  </ul>
+</nav>
+
 <!-- HERO -->
 <section class="hero">
   <!-- Background photo: red 4L at sunset -->
@@ -3239,7 +3260,8 @@ body.sponsor-open{overflow: hidden;}
     <h2 class="cta-title">Vous montez <em>à bord ?</em></h2>
     <p class="cta-text">Sponsoring, dons en nature, fournitures scolaires, partage sur les réseaux : chaque coup de main compte. Le désert ne se traverse pas tout seul.</p>
     <div class="cta-buttons">
-      <a href="https://www.leetchi.com/fr/c/4lsansfreins-4189768" class="btn btn-primary" target="_blank" rel="noopener" data-cursor="expand">Faire un don</a>
+      <a href="parrainage/" class="btn btn-primary" data-cursor="expand">Parrainer un kilomètre</a>
+      <a href="https://www.leetchi.com/fr/c/4lsansfreins-4189768" class="btn btn-secondary" target="_blank" rel="noopener" data-cursor="expand">Faire un don</a>
       <button type="button" class="btn btn-secondary" data-cursor="expand" id="sponsor-btn">Devenir sponsor</button>
     </div>
   </div>
@@ -3258,6 +3280,7 @@ body.sponsor-open{overflow: hidden;}
       <a href="#les4l">Les 4L</a>
       <a href="#parcours">Parcours</a>
       <a href="#equipe">Équipage</a>
+      <a href="parrainage/">Parrainer un km</a>
     </div>
     <div class="footer-col">
       <h4>Réseaux</h4>
