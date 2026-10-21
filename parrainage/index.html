@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Parrainez un kilomètre — La 4L Sans Freins</title>
+<meta name="description" content="2 514 km de Biarritz à Marrakech. Parrainez un kilomètre du 4L Trophy 2027 et inscrivez votre nom sur la carte.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,800;1,9..144,800&display=swap" rel="stylesheet">
+<meta property="og:title" content="Parrainez un kilomètre — La 4L Sans Freins">
+<meta property="og:description" content="Choisissez votre kilomètre entre Biarritz et Marrakech et inscrivez votre nom sur notre carte.">
+<style>
+@font-face{font-family:BG;font-weight:800;src:url(https://cdn.jsdelivr.net/npm/@fontsource/bricolage-grotesque@5.2.10/files/bricolage-grotesque-latin-800-normal.woff2) format('woff2');font-display:swap}
+@font-face{font-family:BG;font-weight:500;src:url(https://cdn.jsdelivr.net/npm/@fontsource/bricolage-grotesque@5.2.10/files/bricolage-grotesque-latin-500-normal.woff2) format('woff2');font-display:swap}
+@font-face{font-family:JM;src:url(https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.2.8/files/jetbrains-mono-latin-500-normal.woff2) format('woff2');font-display:swap}
+:root{--bg:#2b1410;--card:#3a1c16;--line:#57352c;--terra:#c8643f;--terra2:#e07a4f;--cream:#f5ebd9;--sand:#e8d4b8;--mute:#b89a86;--sea:#22100c}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:BG,system-ui,sans-serif;font-weight:500;line-height:1.45;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.mono{font-family:JM,ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;font-size:12px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-weight:800;letter-spacing:-.03em;line-height:1}
+em{font-style:normal;color:var(--terra)}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+/* header */
+header{position:sticky;top:0;z-index:20;background:rgba(43,20,16,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{font-family:Fraunces,Georgia,serif;font-weight:800;font-size:19px;letter-spacing:-.02em;text-decoration:none}
+.brand em{font-style:italic;color:#b85a3c}
+.brand em{margin-left:2px}
+header nav{display:flex;gap:22px;align-items:center}
+header nav a{text-decoration:none;color:var(--sand)}
+header nav a:hover{color:var(--cream)}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--terra);color:#fff;font-weight:800;border-radius:999px;padding:13px 22px;text-decoration:none;transition:transform .15s,background .15s}
+.cta:hover{background:var(--terra2);transform:translateY(-1px)}
+.cta.small{padding:9px 16px;font-size:14px}
+.ghost{border:1.5px solid var(--line);border-radius:999px;padding:10px 16px;font-weight:800;font-size:14px;transition:border-color .15s,background .15s}
+.ghost:hover{border-color:var(--terra);background:rgba(200,100,63,.1)}
+/* hero */
+.hero{padding:40px 0 10px}
+.hero .mono{color:var(--terra)}
+.hero h1{font-size:clamp(44px,6.4vw,84px);margin:12px 0 16px}
+.hero p.lead{font-size:clamp(17px,2vw,21px);color:var(--sand);max-width:680px}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:30px 0 14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.stat b{display:block;font-size:clamp(26px,3.4vw,40px);font-weight:800;letter-spacing:-.03em}
+.stat span{color:var(--mute)}
+.bar{position:relative;height:14px;background:var(--card);border:1px solid var(--line);border-radius:99px;margin:8px 0 6px;overflow:visible}
+.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:linear-gradient(90deg,#a84a2a,var(--terra2));width:0;transition:width 1.6s cubic-bezier(.2,.8,.2,1)}
+.bar .car{position:absolute;top:50%;width:46px;height:28px;transform:translate(-50%,-62%);transition:left 1.6s cubic-bezier(.2,.8,.2,1);left:0}
+.barlab{display:flex;justify-content:space-between;color:var(--mute)}
+/* main grid */
+.main{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,1fr);gap:18px;margin:28px 0 10px;align-items:start}
+.mapbox{position:relative;background:var(--sea);border:1px solid var(--line);border-radius:24px;overflow:hidden;aspect-ratio:1000/1250;touch-action:none;user-select:none}
+#map{width:100%;height:100%;display:block;cursor:grab}
+#map.drag{cursor:grabbing}
+.country{fill:#46261d;stroke:#6b4334;stroke-width:.8;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.country.w{fill:#3f2219}
+.grat{fill:none;stroke:#3a1d16;stroke-width:.7;vector-effect:non-scaling-stroke}
+.road{fill:none;stroke:#8a6250;stroke-width:.7;stroke-opacity:.55;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.bigl{fill:#7a5a4c;font-family:JM;letter-spacing:.35em;text-anchor:middle;pointer-events:none}
+.home circle{fill:#f2b544;stroke:#2b1410;stroke-width:2;vector-effect:non-scaling-stroke}
+.home text{fill:#f2c46a;font-family:BG;font-weight:800;font-size:13px;paint-order:stroke;stroke:var(--sea);stroke-width:4px}
+.homeline{fill:none;stroke:#f2b544;stroke-width:1.6;stroke-dasharray:4 5;vector-effect:non-scaling-stroke;opacity:.8}
+.beacon circle{fill:none;stroke:#ff8a57;stroke-width:3;vector-effect:non-scaling-stroke}
+.beacon text{fill:#fff;font-family:BG;font-weight:800;font-size:15px;paint-order:stroke;stroke:#2b1410;stroke-width:5px;text-anchor:middle}
+#map .r2,#map .r3,#map .roadg,#map .beacon,#map .bigl{display:none}
+#map.l0 .bigl,#map.l0 .beacon{display:block}
+#map.l0 #gTowns,#map.l0 #gLabels,#map.l0 .home text{display:none}
+#map.l2 .r3,#map.l3 .r3,#map.l2 .roadg,#map.l3 .roadg{display:block}
+#map.l3 .r2{display:block}
+.town.r3 circle{fill:var(--sea);stroke:#8a6b5b}
+.town.r3 text{fill:#b89a86;font-weight:500;font-size:12px}
+.mapbox.fs{position:fixed;inset:0;z-index:95;border-radius:0;aspect-ratio:auto;border:0}
+.zoom .lbl{font-size:13px}
+.country.f{fill:#53302a}
+.clabel{fill:#a3826f;font-family:JM;font-size:13px;letter-spacing:.3em;text-anchor:middle;pointer-events:none}
+.clabel.sea{fill:#7a5a4c;font-size:11px;font-style:italic}
+.route-glow{fill:none;stroke:rgba(224,122,79,.18);stroke-width:12;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.route{fill:none;stroke:#e8d4b8;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.route.ferry{stroke-dasharray:2 7}
+.route.piste{stroke-dasharray:8 6;stroke:#f0c9a0}
+.spons{fill:none;stroke:#ff8a57;stroke-width:9;filter:drop-shadow(0 0 4px rgba(255,120,70,.9));stroke-linecap:butt;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.sel{fill:none;stroke:#fff;stroke-width:9;stroke-linecap:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 6px rgba(255,255,255,.8))}
+.hit{fill:none;stroke:transparent;stroke-width:30;vector-effect:non-scaling-stroke;cursor:pointer}
+.town circle{fill:var(--bg);stroke:var(--cream);stroke-width:2;vector-effect:non-scaling-stroke}
+.town.big circle{fill:var(--terra);stroke:#fff}
+.town text{fill:var(--cream);font-family:BG;font-weight:800;font-size:14px;paint-order:stroke;stroke:var(--sea);stroke-width:4px;stroke-linejoin:round;pointer-events:none}
+.town text.km{font-family:JM;font-weight:400;font-size:10px;fill:var(--mute);letter-spacing:.08em}
+.hov{fill:#fff;stroke:var(--terra);stroke-width:3;vector-effect:non-scaling-stroke;pointer-events:none}
+.tip{position:absolute;pointer-events:none;background:rgba(20,9,7,.94);border:1px solid var(--line);border-radius:12px;padding:9px 12px;font-size:13px;white-space:nowrap;transform:translate(-50%,calc(-100% - 16px));opacity:0;transition:opacity .12s;z-index:5}
+.tip b{font-size:16px;font-weight:800;display:block}
+.tip .mono{font-size:10px;color:var(--mute)}
+.tip .free{color:#9fd39a}.tip .taken{color:var(--terra2)}
+.zoom{position:absolute;right:14px;top:14px;display:flex;flex-direction:column;gap:6px;z-index:4}
+.zoom button{width:40px;height:40px;border-radius:12px;background:rgba(43,20,16,.9);border:1px solid var(--line);font-size:20px;font-weight:800}
+.zoom button:hover{border-color:var(--terra)}
+.legend{position:absolute;right:14px;bottom:14px;background:rgba(20,9,7,.85);border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:grid;gap:5px;font-size:12px;z-index:4}
+.legend div{display:flex;align-items:center;gap:8px}
+.legend svg{width:30px;height:8px}
+.hint{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(20,9,7,.85);border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:12px;color:var(--sand);z-index:4;transition:opacity .4s}
+/* panel */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px;position:sticky;top:76px}
+.panel h2{font-size:30px;margin-bottom:4px}
+.kmnum{display:flex;align-items:baseline;gap:10px;margin:16px 0 4px}
+.kmnum input{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;color:var(--cream);font:800 44px BG;letter-spacing:-.03em;padding:6px 14px;outline:none}
+.kmnum input:focus{border-color:var(--terra)}
+.where{color:var(--sand);min-height:22px;font-size:15px}
+.status{display:inline-flex;align-items:center;gap:7px;margin-top:8px;font-size:13px;font-weight:800;border-radius:99px;padding:5px 11px}
+.status.free{background:rgba(120,190,110,.14);color:#a6dca0}
+.status.taken{background:rgba(224,122,79,.16);color:var(--terra2)}
+input[type=range]{width:100%;margin:16px 0 6px;accent-color:var(--terra)}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 16px}
+.packs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 16px}
+.pack{border:1.5px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center;transition:all .15s}
+.pack b{display:block;font-size:20px;font-weight:800}
+.pack span{font-size:12px;color:var(--mute)}
+.pack.on{border-color:var(--terra);background:rgba(200,100,63,.16)}
+.total{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;margin-bottom:14px}
+.total b{font-size:34px;font-weight:800;letter-spacing:-.03em}
+.panel .cta{width:100%;justify-content:center;font-size:17px}
+.howto{margin-top:14px;background:var(--bg);border-radius:14px;padding:12px 14px;font-size:13.5px;color:var(--sand)}
+.howto code{font-family:JM;color:var(--cream);background:var(--card);border-radius:6px;padding:2px 6px}
+.copy{margin-top:8px;font-size:13px;color:var(--terra2);font-weight:800}
+.note{font-size:12.5px;color:var(--mute);margin-top:10px}
+/* sections */
+section{padding:56px 0}
+section h2.t{font-size:clamp(34px,5vw,60px);margin:10px 0 26px}
+.kicker{color:var(--terra)}
+.stages{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stage{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;text-align:left;transition:border-color .15s,transform .15s}
+.stage:hover{border-color:var(--terra);transform:translateY(-2px)}
+.stage .mono{color:var(--terra)}
+.stage h3{font-size:24px;margin:8px 0}
+.stage p{color:var(--sand);font-size:15px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.step{border:1px solid var(--line);border-radius:20px;padding:20px}
+.step b{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--terra);font-weight:800;margin-bottom:12px}
+.step h3{font-size:22px;margin-bottom:6px}
+.step p{color:var(--sand);font-size:15px}
+.wall-top{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.search{background:var(--card);border:1.5px solid var(--line);border-radius:99px;padding:11px 18px;color:var(--cream);font:500 15px BG;min-width:260px;outline:none}
+.search:focus{border-color:var(--terra)}
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.wcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;text-align:left;transition:border-color .15s}
+.wcard:hover{border-color:var(--terra)}
+.wcard b{font-size:18px;font-weight:800;display:block}
+.wcard .mono{color:var(--terra2);font-size:11px}
+.wcard p{color:var(--mute);font-size:13.5px;margin-top:6px}
+.empty{border:1.5px dashed var(--line);border-radius:20px;padding:34px;text-align:center;color:var(--sand)}
+.empty b{display:block;font-size:26px;color:var(--cream);margin-bottom:6px}
+.faq details{border-bottom:1px solid var(--line);padding:16px 0}
+.faq summary{cursor:pointer;font-weight:800;font-size:18px;list-style:none;display:flex;justify-content:space-between}
+.faq summary::after{content:'+';color:var(--terra);font-size:24px;line-height:1}
+.faq details[open] summary::after{content:'−'}
+.faq p{color:var(--sand);margin-top:10px;max-width:760px}
+footer{border-top:1px solid var(--line);padding:30px 0 40px;color:var(--mute);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--cream);color:var(--bg);font-weight:800;border-radius:99px;padding:12px 20px;transition:transform .3s;z-index:50}
+.toast.on{transform:translate(-50%,0)}
+.demo{background:#5a3a10;color:#ffe2a8;text-align:center;font-size:13px;padding:7px}
+
+.fld{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;color:var(--cream);font:500 15px BG;padding:11px 13px;outline:none;margin-bottom:8px}
+.fld:focus{border-color:var(--terra)}
+.fld.err{border-color:#e05a4f}
+.chk{display:flex;gap:8px;align-items:center;font-size:13.5px;color:var(--sand);margin:2px 0 14px;cursor:pointer}
+.chk input{accent-color:var(--terra);width:16px;height:16px}
+.okt{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+.okt em{color:#a6dca0}
+.okp{color:var(--sand);font-size:14.5px;margin-bottom:12px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.row2 .ghost{text-align:center}
+.spons.res{stroke:#f2b544;stroke-dasharray:3 3;filter:drop-shadow(0 0 4px rgba(242,181,68,.8))}
+.status.res{background:rgba(242,181,68,.15);color:#f2c46a}
+.tip .res{color:#f2c46a}
+.live{display:flex;align-items:center;gap:10px;margin-top:14px;min-height:24px;color:var(--sand);font-size:14.5px;flex-wrap:wrap}
+.live .dot{width:9px;height:9px;border-radius:50%;background:#7fd07a;box-shadow:0 0 0 0 rgba(127,208,122,.7);animation:pulse 1.8s infinite;flex:none}
+.live .sync{margin-left:auto;font-family:JM;font-size:11px;letter-spacing:.12em;color:var(--mute);text-transform:uppercase}
+#liveMsg{transition:opacity .35s}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(127,208,122,0)}100%{box-shadow:0 0 0 0 rgba(127,208,122,0)}}
+.wcard .badge{display:inline-block;margin-left:6px;font-family:JM;font-size:10px;letter-spacing:.1em;color:#f2c46a;border:1px solid rgba(242,181,68,.4);border-radius:99px;padding:1px 7px;vertical-align:2px}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:60}
+@media (max-width:900px){
+ .main{grid-template-columns:1fr}.panel{position:static}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .stages,.steps{grid-template-columns:1fr}
+ header nav a.hide{display:none}
+}
+@media (max-width:520px){.packs{grid-template-columns:repeat(2,1fr)}.legend{display:none}.hero{padding-top:36px}}
+</style>
+</head>
+<body>
+<div class="demo" id="demo" hidden>Mode démonstration : les parrains affichés sont fictifs.</div>
+<header><div class="wrap">
+ <a class="brand" id="brandlink" href="../">4L <em>Sans Freins</em></a>
+ <nav><a href="../" id="backsite">← Le site</a><a class="hide" href="../#mission">Mission</a><a class="hide" href="../#equipe">Équipage</a><a class="hide" href="#parrains">Les parrains</a><a class="hide" href="#faq">FAQ</a><a class="cta small" href="#choisir">Parrainer</a></nav>
+</div></header>
+
+<main class="wrap">
+ <div class="hero">
+  <div class="mono">4L Trophy 2027 · Biarritz → Marrakech</div>
+  <h1>Parrainez<br><em>un kilomètre.</em></h1>
+  <p class="lead" id="lead">De Biarritz à Marrakech, il y a <b id="kmTotalTxt">2 514</b> km. Choisissez le vôtre, offrez-le à l'équipage, et votre nom apparaît sur la carte pour toujours (enfin, au moins jusqu'en 2027).</p>
+  <div class="stats">
+   <div class="stat"><b id="sKm">0</b><span>km parrainés</span></div>
+   <div class="stat"><b id="sEur">0 €</b><span>récoltés grâce à la carte</span></div>
+   <div class="stat"><b id="sPar">0</b><span>parrains</span></div>
+   <div class="stat"><b id="sLeft">2 514</b><span>km encore libres</span></div>
+  </div>
+  <div class="bar"><i id="barFill"></i><svg class="car" id="barCar" viewBox="0 0 46 28"><use href="#car4l"/></svg></div>
+  <div class="barlab mono"><span>Biarritz · km 0</span><span id="barPct">0 %</span><span id="barEnd">Marrakech</span></div>
+  <div class="live"><span class="dot"></span><span id="liveMsg">Soyez le premier à parrainer un kilomètre.</span><span class="sync" id="sync"></span></div>
+ </div>
+
+ <div class="main" id="choisir">
+  <div class="mapbox" id="mapbox">
+   <svg id="map" viewBox="0 0 1000 1250" preserveAspectRatio="xMidYMid meet" aria-label="Carte du parcours Biarritz – Marrakech">
+    <defs>
+     <symbol id="car4l" viewBox="0 0 46 28"><path d="M3 21 V14 Q3 11 6 10.5 L12 10 L16 3.5 Q17 2.5 18.5 2.5 H33 Q35 2.5 36 4 L39 10 L42 11 Q44 11.5 44 14 V21 Z" fill="#c8643f" stroke="#2b1410" stroke-width="1.6"/><path d="M17.5 5 H24 V10 H14.5Z M26 5 H33 Q34 5 34.6 6 L36.6 10 H26Z" fill="#f5ebd9"/><circle cx="12" cy="21.5" r="4.6" fill="#2b1410"/><circle cx="12" cy="21.5" r="1.8" fill="#e8d4b8"/><circle cx="35" cy="21.5" r="4.6" fill="#2b1410"/><circle cx="35" cy="21.5" r="1.8" fill="#e8d4b8"/></symbol>
+     <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".9" fill="#3a1d16"/></pattern>
+    </defs>
+    <rect x="-11000" y="-6000" width="23600" height="14000" fill="url(#dots)"/>
+    <path id="grat" class="grat"/>
+    <g id="gCountries"></g><g class="roadg"><path id="roads" class="road"/></g><g id="gLabels"></g><g id="gBig"></g>
+    <path id="homeline" class="homeline"/>
+    <g id="gRoute"></g><g id="gSpons"></g><g id="gSel"></g>
+    <path id="hit" class="hit"/>
+    <g id="gTowns"></g>
+    <circle id="hov" class="hov" r="0"/>
+    <g id="gHome" class="home"></g>
+    <g id="beacon" class="beacon"><circle r="10"><animate attributeName="r" values="8;26;8" dur="2s" repeatCount="indefinite"/></circle><text y="-20">4L Trophy · Biarritz → Marrakech</text></g>
+    <g id="gCar" opacity="0"><use href="#car4l" x="-23" y="-34" width="46" height="28"/></g>
+   </svg>
+   <div class="tip" id="tip"></div>
+   <div class="hint" id="hint">Survolez le tracé pour choisir un kilomètre · molette ou pincer pour zoomer</div>
+   <div class="zoom"><button id="zIn" aria-label="Zoomer">+</button><button id="zOut" aria-label="Dézoomer">−</button><button id="zReset" aria-label="Recentrer sur le parcours" title="Recentrer sur le parcours" style="font-size:15px">⌖</button><button id="zWorld" aria-label="Voir le monde entier" title="Monde entier" style="font-size:17px">🌍</button><button id="zFs" aria-label="Plein écran" title="Plein écran" style="font-size:15px">⛶</button></div>
+   <div class="legend">
+    <div><svg viewBox="0 0 30 8"><line x1="0" y1="4" x2="30" y2="4" stroke="#e8d4b8" stroke-width="2.4"/></svg>Route</div>
+    <div><svg viewBox="0 0 30 8"><line x1="0" y1="4" x2="30" y2="4" stroke="#e8d4b8" stroke-width="2.4" stroke-dasharray="2 5"/></svg>Ferry</div>
+    <div><svg viewBox="0 0 30 8"><line x1="0" y1="4" x2="30" y2="4" stroke="#f0c9a0" stroke-width="2.4" stroke-dasharray="7 5"/></svg>Piste du désert</div>
+    <div><svg viewBox="0 0 30 8"><line x1="0" y1="4" x2="30" y2="4" stroke="#ff8a57" stroke-width="6"/></svg>Km parrainés</div>
+    <div><svg viewBox="0 0 30 8"><line x1="0" y1="4" x2="30" y2="4" stroke="#f2b544" stroke-width="6" stroke-dasharray="3 3"/></svg>Réservés (paiement en cours)</div>
+   </div>
+  </div>
+
+  <aside class="panel">
+   <div class="mono kicker">Votre kilomètre</div>
+   <h2>Choisissez-le.</h2>
+   <div class="kmnum"><input id="kmIn" type="number" inputmode="numeric" min="1" value="1" aria-label="Numéro du kilomètre"></div>
+   <div class="where" id="where"></div>
+   <div id="stat" class="status free">● Libre</div>
+   <input type="range" id="kmRange" min="1" value="1" aria-label="Choisir le kilomètre">
+   <div class="quick">
+    <button class="ghost" id="bRand">🎲 Au hasard</button>
+    <button class="ghost" id="bBirth">Mon année de naissance</button><span id="birthBox" style="display:none;gap:6px"><input id="birthIn" type="number" inputmode="numeric" placeholder="ex. 1998" style="width:110px;background:var(--bg);border:1.5px solid var(--terra);border-radius:99px;color:var(--cream);font:800 15px BG;padding:9px 14px;outline:none"><button class="ghost" id="birthOk">OK</button></span>
+    <button class="ghost" id="bNext">Prochain libre</button>
+   </div>
+   <div class="mono" style="color:var(--mute)">Combien de km ?</div>
+   <div class="packs" id="packs"></div>
+   <div class="total"><span>Total</span><b id="tot">5 €</b></div>
+   <div id="formBox">
+    <input class="fld" id="fNom" maxlength="40" placeholder="Nom affiché sur la carte" autocomplete="name">
+    <input class="fld" id="fMail" type="email" maxlength="80" placeholder="Votre e-mail (jamais affiché)" autocomplete="email">
+    <input class="fld" id="fMsg" maxlength="120" placeholder="Un mot pour l'équipage (facultatif)">
+    <label class="chk"><input type="checkbox" id="fAnon"> Rester anonyme sur la carte</label>
+    <button class="cta" id="bRes" style="width:100%;justify-content:center;font-size:17px">Réserver ce kilomètre →</button>
+   </div>
+   <div id="okBox" hidden>
+    <div class="okt" id="okT"></div>
+    <p class="okp" id="okP"></p>
+    <a class="cta" id="go" href="#" target="_blank" rel="noopener" style="width:100%;justify-content:center;font-size:17px">Finaliser sur Leetchi →</a>
+    <div class="howto">Dans le message de votre participation, écrivez : <br><code id="code">KM 1 · Votre nom</code>
+     <div><button class="copy" id="bCopy">Copier ce message</button></div></div>
+    <div class="row2"><button class="ghost" id="bCert">Mon certificat</button><button class="ghost" id="bShare">Partager</button></div>
+    <div style="text-align:center;margin-top:8px"><button class="copy" id="bAgain">← Parrainer un autre kilomètre</button></div>
+   </div>
+   <p class="note" id="payNote" style="display:none"></p><p class="note">L'association n'est pas éligible au reçu fiscal : votre don n'ouvre pas droit à réduction d'impôt. Il ouvre droit à notre reconnaissance éternelle.</p>
+  </aside>
+ </div>
+
+ <section id="etapes">
+  <div class="mono kicker">Le parcours</div>
+  <h2 class="t">Six étapes, <em>zéro frein.</em></h2>
+  <div class="stages" id="stages"></div>
+ </section>
+
+ <section>
+  <div class="mono kicker">Comment ça marche</div>
+  <h2 class="t">Trois étapes, <em>deux minutes.</em></h2>
+  <div class="steps">
+   <div class="step"><b>1</b><h3>Choisissez</h3><p>Un kilomètre précis, votre année de naissance, un tronçon entier ou un km au hasard. Survolez la carte pour voir où il se trouve.</p></div>
+   <div class="step"><b>2</b><h3 id="st2t">Payez en ligne</h3><p id="st2p">Paiement sécurisé par HelloAsso, la plateforme de paiement des associations. Votre kilomètre est bloqué à votre nom le temps du paiement.</p></div>
+   <div class="step"><b>3</b><h3>Roulez avec nous</h3><p>Dès le paiement, votre kilomètre passe en orange sur la carte, automatiquement. Téléchargez votre certificat, et on vous prévient quand la 4L passe dessus.</p></div>
+  </div>
+ </section>
+
+ <section id="parrains">
+  <div class="wall-top">
+   <div><div class="mono kicker">Le mur des parrains</div><h2 class="t" style="margin-bottom:0">Ils ont leur <em>kilomètre.</em></h2></div>
+   <input class="search" id="q" type="search" placeholder="Retrouver un parrain ou un km…">
+  </div>
+  <div class="wall" id="wall"></div>
+ </section>
+
+ <section id="faq" class="faq">
+  <div class="mono kicker">Questions</div>
+  <h2 class="t">Bon à <em>savoir.</em></h2>
+  <details><summary>À quoi sert l'argent ?</summary><p>À financer notre participation au 4L Trophy 2027 : l'achat et la préparation de nos deux 4L, « La Téméraire » et « La Dôdin », l'inscription au raid, le carburant, les péages et le matériel. Le 4L Trophy achemine aussi des fournitures scolaires et sportives pour des enfants au Maroc.</p></details>
+  <details><summary>Je peux offrir un kilomètre à quelqu'un ?</summary><p>Bien sûr. Indiquez simplement son nom dans le message de votre participation : c'est son nom qui apparaîtra sur la carte. Idée cadeau : le km correspondant à son année de naissance.</p></details>
+  <details><summary>Mon kilomètre est déjà pris, je fais comment ?</summary><p>Chaque kilomètre n'a qu'un parrain. Le bouton « Prochain libre » vous propose le plus proche disponible. Un km réservé (en jaune) qui n'est pas payé redevient libre automatiquement.</p></details>
+  <details><summary>Les entreprises peuvent participer ?</summary><p>Oui, et un tronçon entier (50 km, une ville, la traversée du détroit…) fait un très joli clin d'œil. Pour un partenariat avec logo sur les voitures, écrivez-nous à <a id="mail" href="#"></a>.</p></details>
+  <details><summary>Ai-je droit à un reçu fiscal ?</summary><p>Non : notre association n'est pas reconnue d'intérêt général, nous ne pouvons donc pas délivrer de reçu fiscal. Les entreprises peuvent en revanche passer par un contrat de sponsoring.</p></details>
+  <details><summary>Le tracé est-il exact ?</summary><p>Il est indicatif : il est calculé sur le réseau routier et suit les grandes étapes du raid. L'itinéraire officiel est communiqué par l'organisation peu avant le départ.</p></details>
+ </section>
+</main>
+<footer><div class="wrap"><span>© 2026 La 4L Sans Freins · Association loi 1901 · IUT d'Orléans</span><span><a id="fsite" href="#">Site principal</a> · <a id="fig" href="#">Instagram</a> · <a id="fmail" href="#">Contact</a></span></div></footer>
+<div class="toast" id="toast"></div>
+<canvas id="confetti"></canvas>
+<div id="haSim" style="display:none;position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.7);place-items:center;padding:20px">
+ <div style="background:#fff;color:#2e2f5e;border-radius:18px;max-width:420px;width:100%;padding:26px;font-family:system-ui,sans-serif;box-shadow:0 30px 80px rgba(0,0,0,.5)">
+  <div style="font-weight:800;font-size:20px;color:#49d38a;letter-spacing:-.02em">helloasso <span style="font-size:11px;color:#999;font-weight:600">· page de paiement SIMULÉE (démo)</span></div>
+  <p style="margin:16px 0 4px;color:#555;font-size:14px">La 4L Sans Freins</p>
+  <p id="haItem" style="font-weight:700;font-size:17px"></p>
+  <p id="haAmt" style="font-size:34px;font-weight:800;margin:10px 0 18px"></p>
+  <div style="border:1px solid #ddd;border-radius:10px;padding:12px;color:#999;font-size:14px;margin-bottom:16px">💳 4242 4242 4242 4242 · 12/30 · 123</div>
+  <button id="haPay" style="width:100%;background:#4c40cf;color:#fff;border:0;border-radius:99px;padding:14px;font-weight:800;font-size:16px;cursor:pointer">Payer</button>
+  <button id="haCancel" style="width:100%;background:none;border:0;color:#777;padding:12px;cursor:pointer;font-size:14px">Annuler et revenir au site</button>
+ </div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="geo.js"></script>
+<script src="parrains.js"></script>
+<script>
+(()=>{
+const G=window.GEO, C=window.PARRAINAGE, $=id=>document.getElementById(id), NS='http://www.w3.org/2000/svg';
+const fmt=n=>n.toLocaleString('fr-FR'), eur=n=>n.toLocaleString('fr-FR')+' €';
+const TOTAL=G.total, R=G.route; // [x,y,km,type]
+const qs=new URLSearchParams(location.search);
+const DEMO=qs.has('demo'), LIVE=DEMO||!!C.apiUrl; let HA=LIVE&&(C.paiement||'helloasso')==='helloasso';
+let P=[], owner=new Array(TOTAL+1).fill(null), taken=0, reserved=0, lastSync=null, firstRender=true;
+const norm=st=>p=>({nom:String(p.nom||'Anonyme'),message:p.message||'',de:Math.max(1,Math.round(+p.de)),a:Math.min(TOTAL,Math.round(+(p.a??p.de))),statut:p.statut||st,date:p.date||null});
+const STATIC=(C.parrains||[]).map(norm('valide'));
+const H=3600e3, now=Date.now();
+let DEMO_DB=[{nom:'Famille Lorne',de:1,a:40,message:'Bon vent les jeunes !',statut:'valide',date:now-50*H},{nom:'Garage du Coin',de:400,a:449,statut:'valide',date:now-30*H},{nom:'Mamie Jacqueline',de:1948,a:1948,message:'Mon année !',statut:'valide',date:now-20*H},{nom:'Les potes du RCO',de:1095,a:1124,message:'Le détroit est à nous',statut:'valide',date:now-9*H},{nom:'Julie',de:2002,a:2002,statut:'reserve',date:now-3*H},{nom:'Boulangerie Martin',de:1880,a:1929,statut:'valide',date:now-6*H},{nom:'Thomas & Léa',de:2500,a:2514,statut:'reserve',date:now-.4*H,message:'On vous attend à Marrakech'}];
+function setData(list){P=list.filter(p=>p.a>=p.de);owner.fill(null);P.forEach((p,i)=>{for(let k=p.de;k<=p.a;k++)if(owner[k]===null)owner[k]=i;});
+ taken=0;reserved=0;for(let k=1;k<=TOTAL;k++){const o=owner[k];if(o!==null){if(P[o].statut==='valide')taken++;else reserved++;}}}
+async function fetchRemote(){if(DEMO)return DEMO_DB.map(norm('reserve'));if(!C.apiUrl)return [];
+ const r=await fetch(C.apiUrl+(C.apiUrl.includes('?')?'&':'?')+'t='+Date.now());const j=await r.json();if(j.paiement&&(C.paiement||'helloasso')==='helloasso'){HA=j.paiement==='helloasso';applyMode();}return (j.parrains||[]).map(norm('reserve'));}
+async function apiReserve(d){
+ if(DEMO){await new Promise(r=>setTimeout(r,700));if(DEMO_DB.some(p=>!(d.a<p.de||d.de>p.a)))return {ok:false,err:"Ce kilomètre vient d'être réservé par quelqu'un d'autre."};
+  const resa='demo'+Date.now();DEMO_DB.push({resa,nom:d.afficher==='non'?'Anonyme':d.nom,de:d.de,a:d.a,message:d.afficher==='non'?'':d.message,statut:'reserve',date:Date.now()});return {ok:true,resa,redirectUrl:'#demo-helloasso'};}
+ const r=await fetch(C.apiUrl+(C.apiUrl.includes('?')?'&':'?')+'action=reserver&'+new URLSearchParams(d));return r.json();}
+async function apiCall(action,resa){
+ if(DEMO){const p=DEMO_DB.find(x=>x.resa===resa);if(action==='annuler'&&p&&p.statut!=='valide')DEMO_DB=DEMO_DB.filter(x=>x!==p);return {ok:true,paye:!!p&&p.statut==='valide'};}
+ const r=await fetch(C.apiUrl+(C.apiUrl.includes('?')?'&':'?')+'action='+action+'&resa='+encodeURIComponent(resa));return r.json();}
+async function refresh(){let remote=[];try{remote=await fetchRemote();lastSync=new Date();}catch(e){console.warn('Synchro impossible',e);}
+ setData([...STATIC,...remote]);renderData();}
+/* ---------- geometry helpers ---------- */
+function ptAt(km){ // interpolate position at cumulative km
+ if(km<=0) return [R[0][0],R[0][1],0];
+ let lo=0,hi=R.length-1; while(hi-lo>1){const m=(lo+hi)>>1; if(R[m][2]<km) lo=m; else hi=m;}
+ const a=R[lo],b=R[hi],t=(km-a[2])/((b[2]-a[2])||1); return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,lo];
+}
+function rangeD(k1,k2){ // km k1..k2 inclusive -> path covering [k1-1,k2]
+ const a=ptAt((k1-1)*SC), b=ptAt(k2*SC); let d=`M${a[0]},${a[1]}`;
+ for(let i=a[2]+1;i<=b[2];i++) d+=`L${R[i][0]},${R[i][1]}`;
+ return d+`L${b[0]},${b[1]}`;
+}
+const exact=R[R.length-1][2], SC=exact/TOTAL; // map integer km -> exact cumulative
+function kmAtPoint(x,y){ // nearest projection on route
+ let best=1e18,bk=1,bp=null;
+ for(let i=0;i<R.length-1;i++){const a=R[i],b=R[i+1],dx=b[0]-a[0],dy=b[1]-a[1],L=dx*dx+dy*dy||1;
+  let t=((x-a[0])*dx+(y-a[1])*dy)/L; t=Math.max(0,Math.min(1,t)); const px=a[0]+dx*t,py=a[1]+dy*t,d=(px-x)**2+(py-y)**2;
+  if(d<best){best=d;bk=a[2]+(b[2]-a[2])*t;bp=[px,py];}}
+ return {km:Math.min(TOTAL,Math.max(1,Math.ceil(bk/SC))),d:Math.sqrt(best),p:bp};
+}
+G.townKm={};G.towns={};G.cities.forEach(c=>{G.towns[c.n]=c.p;if(c.km!=null)G.townKm[c.n]=c.km;});
+const towns=Object.entries(G.townKm).sort((a,b)=>a[1]-b[1]);
+function whereTxt(km){
+ const near=towns.find(t=>Math.abs(t[1]-km)<=4); if(near) return `À ${near[0]}`;
+ let prev=towns[0],next=towns[towns.length-1];
+ for(const t of towns){ if(t[1]<=km) prev=t; else {next=t;break;} }
+ const seg=segType(km); const pre=seg==='ferry'?'En mer, ':seg==='piste'?'En plein désert, ':'';
+ return `${pre}entre ${prev[0]} et ${next[0]}`;
+}
+function segType(km){const p=ptAt((km-.5)*SC);return R[Math.min(p[2]+1,R.length-1)][3];}
+function country(km){const t=segType(km); const tanger=G.townKm['Tanger Med'];
+ if(km<=8) return 'France'; if(t==='ferry') return 'Détroit de Gibraltar'; return km<tanger?'Espagne':'Maroc';}
+
+/* ---------- draw map ---------- */
+const svg=$('map');
+const el=(tag,attrs,parent)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);parent&&parent.appendChild(e);return e;};
+$('roads').setAttribute('d',G.roads);G.countries=[];
+/* Contours des pays : Natural Earth (domaine public) via world-atlas, projetés dans le navigateur */
+(async()=>{try{
+ const pr=d3.geoMercator().scale(G.proj.s).translate(G.proj.t);const tl=pr([-180,80]),br=pr([180,-58]);
+ pr.clipExtent([[tl[0],tl[1]],[br[0],br[1]]]);const path=d3.geoPath(pr);const WW=br[0]-tl[0];
+ $('grat').setAttribute('d',path(d3.geoGraticule10()));
+ const A='https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/';
+ const draw=(fs,det)=>{const g=$('gCountries');const keep=[];
+  for(const f of fs){const b=d3.geoBounds(f);if(b[1][0]<b[0][0])continue;const bb=path.bounds(f);if(bb[1][0]-bb[0][0]>.9*WW)continue;
+   const inDet=!(b[1][0]<-20||b[0][0]>22||b[1][1]<25||b[0][1]>52);if(det&&!inDet)continue;
+   const d=path(f);if(!d)continue;keep.push({id:+f.id,f:[250,724,504,620].includes(+f.id)?1:0,w:det?0:1,d,inDet});}
+  return keep;};
+ const render=list=>{const g=$('gCountries');g.innerHTML='';list.forEach(c=>el('path',{d:c.d,class:'country'+(c.f?' f':'')+(c.w?' w':'')},g));G.countries=list;};
+ const w50=await fetch(A+'countries-50m.json').then(r=>r.json());const f50=topojson.feature(w50,w50.objects.countries).features;
+ let base=draw(f50,false);render(base);
+ const w10=await fetch(A+'countries-10m.json').then(r=>r.json());const f10=topojson.feature(w10,w10.objects.countries).features;
+ const det=draw(f10,true);const ids=new Set(det.map(c=>c.id));render(base.filter(c=>!(c.inDet&&ids.has(c.id))).concat(det));
+}catch(e){console.warn('Fond de carte indisponible',e);}})();
+for(const [k,v] of Object.entries(G.big)){const t=el('text',{x:v[0],y:v[1],class:'bigl'},$('gBig'));t.textContent=k;}
+for(const [k,v] of Object.entries(G.labels)){const t=el('text',{x:v[0],y:v[1],class:'clabel'+(/OCÉAN|MER/.test(k)?' sea':'')},$('gLabels'));t.textContent=k;}
+// route by type runs
+let runs=[],cur=null;
+R.forEach((r,i)=>{ if(!cur||cur.t!==r[3]){ if(cur) cur.pts.push(r); cur={t:r[3],pts:i?[R[i-1],r]:[r]}; runs.push(cur);} else cur.pts.push(r); });
+const fullD='M'+R.map(r=>r[0]+','+r[1]).join('L');
+el('path',{d:fullD,class:'route-glow'},$('gRoute'));
+const routeEls=runs.map(rn=>el('path',{d:'M'+rn.pts.map(r=>r[0]+','+r[1]).join('L'),class:'route '+rn.t},$('gRoute')));
+$('hit').setAttribute('d',fullD);
+// towns
+const LEFT=['Cordoue','Algésiras','Meknès','Midelt','Ouarzazate','Marrakech','Antequera','Malaga','Aït-Ben-Haddou','Ifrane','Sidi Kacem','Aranda de Duero','Irun','Lisbonne','Porto','Agadir','Casablanca','Rabat','Séville','Jerez','Tarifa','Valdepeñas','Bailén','Jaén','Fès','Tinghir'];
+const DOWN={'Merzouga':[12,14,'start'],'Rissani':[12,-6,'start'],'Boumalne Dadès':[0,22,'middle'],"Kelaat M'Gouna":[0,-14,'middle'],'Tinghir':[0,-14,'middle'],'Erfoud':[12,6,'start'],'Col du Tichka':[12,-6,'start'],'Bayonne':[12,-8,'start'],'Biarritz':[12,8,'start'],'Azrou':[12,8,'start']};
+G.cities.sort((x,y)=>y.r-x.r).forEach(c=>{const g=el('g',{class:`town r${c.r}`+(c.r===1?' big':''),transform:`translate(${c.p[0]},${c.p[1]})`},$('gTowns'));
+ el('circle',{r:c.r===1?6:c.r===2?4:3},g);const L=DOWN[c.n]||(LEFT.includes(c.n)?[-11,4,'end']:[11,4,'start']);
+ const t=el('text',{x:L[0],y:L[1],'text-anchor':L[2]},g);t.textContent=c.n;
+ if(c.km!=null&&c.r<3){const t2=el('text',{x:L[0],y:L[1]+13,'text-anchor':L[2],class:'km'},g);t2.textContent='KM '+fmt(Math.max(c.km,0));
+  g.style.cursor='pointer';g.addEventListener('click',()=>select(Math.max(1,c.km),1,true));}});
+{const h=G.home,g=el('g',{transform:`translate(${h.p[0]},${h.p[1]})`},$('gHome'));el('circle',{r:6},g);const t=el('text',{x:11,y:4},g);t.textContent='Orléans · notre IUT';
+ const b0=R[0];$('homeline').setAttribute('d',`M${h.p[0]},${h.p[1]}Q${(h.p[0]+b0[0])/2+60},${(h.p[1]+b0[1])/2} ${b0[0]},${b0[1]}`);}
+{const mid=R[Math.floor(R.length/2)];$('beacon').setAttribute('transform',`translate(${mid[0]},${mid[1]})`);}
+
+/* ---------- pan & zoom ---------- */
+const AR=()=>{const r=svg.getBoundingClientRect();return (r.height/r.width)||1.25;};
+const WB=G.world;
+const VB0=()=>{const ar=AR();let w=1000,h=w*ar;if(h<1250){h=1250;w=h/ar;}return {x:500-w/2,y:625-h/2,w,h};};
+let vb=VB0();
+const setVB=()=>{svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`); scaleMarks();};
+function clampVB(){const ar=AR();vb.w=Math.min(WB.w,Math.max(30,vb.w));vb.h=vb.w*ar;if(vb.h>WB.h){vb.h=WB.h;vb.w=vb.h/ar;}
+ vb.x=Math.min(WB.x+WB.w-vb.w,Math.max(WB.x,vb.x)); vb.y=Math.min(WB.y+WB.h-vb.h,Math.max(WB.y,vb.y));}
+function toSvg(cx,cy){const r=svg.getBoundingClientRect();return [vb.x+(cx-r.left)*vb.w/r.width,vb.y+(cy-r.top)*vb.h/r.height];}
+function toScreen(x,y){const r=svg.getBoundingClientRect();return [(x-vb.x)*r.width/vb.w,(y-vb.y)*r.height/vb.h];}
+function zoomAt(f,cx,cy){const [x,y]=cx==null?[vb.x+vb.w/2,vb.y+vb.h/2]:toSvg(cx,cy);const ow=vb.w;vb.w=vb.w*f;clampVB();const k=vb.w/ow;vb.x=x-(x-vb.x)*k;vb.y=y-(y-vb.y)*k;clampVB();setVB();}
+let animId;
+function animVB(t){cancelAnimationFrame(animId);const s0={...vb},t0=performance.now(),D=t.w/vb.w>4||vb.w/t.w>4?1400:900;const e=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+ const lw0=Math.log(s0.w),lw1=Math.log(t.w);
+ const step=n=>{const k=e(Math.min(1,(n-t0)/D));const w=Math.exp(lw0+(lw1-lw0)*k);const cx=s0.x+s0.w/2+((t.x+t.w/2)-(s0.x+s0.w/2))*k,cy=s0.y+s0.h/2+((t.y+t.h/2)-(s0.y+s0.h/2))*k;
+  vb.w=w;vb.h=w*AR();vb.x=cx-vb.w/2;vb.y=cy-vb.h/2;setVB();if(k<1)animId=requestAnimationFrame(step);};animId=requestAnimationFrame(step);}
+function flyTo(x,y,w){const h=w*AR();animVB({x:x-w/2,y:y-h/2,w,h});}
+function lod(){const c=vb.w>5000?'l0':vb.w>1700?'l1':vb.w>650?'l2':'l3';if(svg.dataset.l!==c){svg.classList.remove('l0','l1','l2','l3');svg.classList.add(c);svg.dataset.l=c;}}
+function scaleMarks(){const rw=svg.getBoundingClientRect().width||700;const u=vb.w/rw;const k=u*.95;lod();
+ $('gTowns').querySelectorAll('g').forEach(g=>{const p=g.getAttribute('transform').match(/translate\(([^)]+)\)/)[1];g.setAttribute('transform',`translate(${p}) scale(${k})`);});
+ $('gHome').querySelectorAll('g').forEach(g=>{const p=g.getAttribute('transform').match(/translate\(([^)]+)\)/)[1];g.setAttribute('transform',`translate(${p}) scale(${k})`);});
+ $('gLabels').querySelectorAll('text').forEach(t=>t.style.fontSize=(t.classList.contains('sea')?11:13)*u+'px');
+ $('gBig').querySelectorAll('text').forEach(t=>t.style.fontSize=13*u+'px');
+ const bc=$('beacon');const m=bc.getAttribute('transform').match(/translate\(([^)]+)\)/)[1];bc.setAttribute('transform',`translate(${m}) scale(${u})`);
+ $('hov').setAttribute('r',hovOn?7*u:0); $('gCar').querySelector('use').setAttribute('transform',`scale(${u*.9})`);}
+window.addEventListener('resize',()=>{const cx=vb.x+vb.w/2,cy=vb.y+vb.h/2;vb.h=vb.w*AR();vb.x=cx-vb.w/2;vb.y=cy-vb.h/2;clampVB();setVB();});
+$('zIn').onclick=()=>zoomAt(.6); $('zOut').onclick=()=>zoomAt(1/.6); $('zReset').onclick=()=>animVB(VB0());
+$('zWorld').onclick=()=>{const ar=AR();let w=WB.w,h=w*ar;if(h>WB.h){h=WB.h;w=h/ar;}animVB({x:WB.x+(WB.w-w)/2,y:Math.max(WB.y,Math.min(WB.y+WB.h-h,600-h*.45)),w,h});};
+$('zFs').onclick=()=>{const mb=$('mapbox');const on=!mb.classList.contains('fs');const cx=vb.x+vb.w/2,cy=vb.y+vb.h/2;
+ mb.classList.toggle('fs',on);document.body.style.overflow=on?'hidden':'';$('zFs').textContent=on?'✕':'⛶';
+ try{if(on&&mb.requestFullscreen)mb.requestFullscreen().catch(()=>{});else if(!on&&document.fullscreenElement)document.exitFullscreen();}catch(e){}
+ setTimeout(()=>{vb.h=vb.w*AR();vb.x=cx-vb.w/2;vb.y=cy-vb.h/2;clampVB();setVB();},60);};
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&$('mapbox').classList.contains('fs'))$('zFs').click();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('mapbox').classList.contains('fs'))$('zFs').click();});
+svg.addEventListener('wheel',e=>{e.preventDefault();zoomAt(Math.exp(e.deltaY*.0015),e.clientX,e.clientY);},{passive:false});
+const ptrs=new Map(); let dragged=false,pinch0=null,start=null;
+svg.addEventListener('pointerdown',e=>{svg.setPointerCapture(e.pointerId);ptrs.set(e.pointerId,[e.clientX,e.clientY]);dragged=false;start=[e.clientX,e.clientY];if(ptrs.size===2){const [a,b]=[...ptrs.values()];pinch0={d:Math.hypot(a[0]-b[0],a[1]-b[1]),w:vb.w};}});
+svg.addEventListener('pointermove',e=>{
+ if(ptrs.has(e.pointerId)){const prev=ptrs.get(e.pointerId);ptrs.set(e.pointerId,[e.clientX,e.clientY]);
+  if(ptrs.size===2&&pinch0){const [a,b]=[...ptrs.values()];const d=Math.hypot(a[0]-b[0],a[1]-b[1]);const cx=(a[0]+b[0])/2,cy=(a[1]+b[1])/2;zoomAt((pinch0.w*pinch0.d/d)/vb.w,cx,cy);dragged=true;return;}
+  if(Math.hypot(e.clientX-start[0],e.clientY-start[1])>5){dragged=true;svg.classList.add('drag');}
+  if(dragged){const r=svg.getBoundingClientRect();const s=Math.max(vb.w/r.width,vb.h/r.height);vb.x-=(e.clientX-prev[0])*vb.w/r.width;vb.y-=(e.clientY-prev[1])*vb.h/r.height;clampVB();setVB();hideTip();return;}
+ }
+ if(e.pointerType==='mouse') hover(e.clientX,e.clientY);
+});
+const up=e=>{ptrs.delete(e.pointerId);if(ptrs.size<2)pinch0=null;svg.classList.remove('drag');
+ if(!dragged&&e.type==='pointerup'){const [x,y]=toSvg(e.clientX,e.clientY);const h=kmAtPoint(x,y);const tol=22*vb.w/svg.getBoundingClientRect().width;
+  if(h.d<tol){select(h.km,null,false);if(e.pointerType!=='mouse')hover(e.clientX,e.clientY);}}};
+svg.addEventListener('pointerup',up);svg.addEventListener('pointercancel',up);
+svg.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')hideTip();});
+svg.addEventListener('dblclick',e=>zoomAt(.5,e.clientX,e.clientY));
+
+/* ---------- hover tooltip ---------- */
+let hovOn=false;
+function hover(cx,cy){const [x,y]=toSvg(cx,cy);const h=kmAtPoint(x,y);const tol=22*vb.w/svg.getBoundingClientRect().width;
+ if(h.d>tol){hideTip();return;}
+ hovOn=true;const hv=$('hov');hv.setAttribute('cx',h.p[0]);hv.setAttribute('cy',h.p[1]);hv.setAttribute('r',7*vb.w/svg.getBoundingClientRect().width);
+ const o=owner[h.km];const tip=$('tip');
+ tip.innerHTML=`<span class="mono">${country(h.km)}</span><b>KM ${fmt(h.km)}</b>${whereTxt(h.km)}<br>${o===null?'<span class="free">● Libre · '+eur(C.prixKm)+'</span>':P[o].statut==='valide'?'<span class="taken">● Parrainé par '+esc(P[o].nom)+'</span>':'<span class="res">● Réservé par '+esc(P[o].nom)+'</span>'}`;
+ const [sx,sy]=toScreen(h.p[0],h.p[1]);const mb=$('mapbox').getBoundingClientRect(),sr=svg.getBoundingClientRect();
+ let lx=sx+sr.left-mb.left; lx=Math.max(110,Math.min(mb.width-110,lx)); tip.style.left=lx+'px';tip.style.top=(sy+sr.top-mb.top)+'px';tip.style.opacity=1;svg.style.cursor='pointer';$('hint').style.opacity=0;}
+function hideTip(){hovOn=false;$('tip').style.opacity=0;$('hov').setAttribute('r',0);svg.style.cursor='';}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- selection panel ---------- */
+const PACKS=[1,5,10,50]; let selKm=1,selN=1,sel=[1,1];
+PACKS.forEach(n=>{const b=document.createElement('button');b.className='pack';b.dataset.n=n;b.innerHTML=`<b>${n} km</b><span>${eur(n*C.prixKm)}</span>`;b.onclick=()=>select(selKm,n,false);$('packs').appendChild(b);});
+$('kmIn').max=TOTAL;$('kmRange').max=TOTAL;
+function freeRange(k,n){let a=k,b=k;while(b-a+1<n&&b<TOTAL&&owner[b+1]===null)b++;return [a,b];}
+function select(km,n,fly,keep){
+ selKm=Math.max(1,Math.min(TOTAL,km|0)); if(n) selN=n;
+ if(!keep) showForm();
+ const o=owner[selKm]; const [a,b]=o===null?freeRange(selKm,selN):[selKm,selKm]; const cnt=b-a+1; sel=[a,b];
+ $('kmIn').value=selKm;$('kmRange').value=selKm;
+ $('where').textContent=whereTxt(selKm)+' · '+country(selKm);
+ const st=$('stat');
+ if(o===null){st.className='status free';st.textContent=cnt<selN?`● Libre · seulement ${cnt} km libres d'affilée`:(cnt>1?`● ${cnt} km libres : du ${fmt(a)} au ${fmt(b)}`:'● Libre');}
+ else if(P[o].statut==='valide'){st.className='status taken';st.textContent='● Déjà parrainé par '+P[o].nom;}
+ else{st.className='status res';st.textContent='● Réservé par '+P[o].nom+' (paiement en cours)';}
+ document.querySelectorAll('.pack').forEach(p=>p.classList.toggle('on',+p.dataset.n===selN));
+ $('tot').textContent=o===null?eur(cnt*C.prixKm):'—';
+ $('bRes').disabled=o!==null;$('bRes').style.opacity=o===null?1:.45;
+ $('bRes').textContent=o!==null?'Kilomètre indisponible':HA?`Payer ${eur(cnt*C.prixKm)} avec HelloAsso →`:LIVE?(cnt>1?`Réserver ces ${cnt} km →`:'Réserver ce kilomètre →'):'Parrainer ce kilomètre →';
+ const g=$('gSel');g.innerHTML='';el('path',{d:rangeD(a,b),class:'sel'},g);
+ const p=ptAt((a-.5)*SC); const car=$('gCar'); car.setAttribute('transform',`translate(${p[0]},${p[1]})`);car.setAttribute('opacity',1);
+ if(fly){flyTo(p[0],p[1],Math.min(vb.w,320));}
+ try{history.replaceState(null,'','#km'+selKm);}catch(e){}
+}
+$('kmIn').addEventListener('input',e=>{const v=+e.target.value;if(v>=1&&v<=TOTAL)select(v,null,false);});
+$('kmIn').addEventListener('change',e=>select(+e.target.value||1,null,true));
+$('kmRange').addEventListener('input',e=>select(+e.target.value,null,false));
+$('kmRange').addEventListener('change',e=>select(+e.target.value,null,true));
+const freeList=()=>{const f=[];for(let k=1;k<=TOTAL;k++)if(owner[k]===null)f.push(k);return f;};
+$('bRand').onclick=()=>{const f=freeList();if(!f.length)return;const k=f[Math.floor(Math.random()*f.length)];spin(k);};
+$('bNext').onclick=()=>{for(let d=1;d<TOTAL;d++){for(const k of[selKm+d,selKm-d])if(k>=1&&k<=TOTAL&&owner[k]===null){select(k,null,true);return;}}};
+$('bBirth').onclick=()=>{$('bBirth').hidden=true;$('birthBox').style.display='inline-flex';$('birthIn').focus();};
+$('birthIn').addEventListener('keydown',e=>{if(e.key==='Enter')$('birthOk').click();});
+$('birthOk').onclick=()=>{const y=$('birthIn').value;$('birthBox').style.display='none';$('bBirth').hidden=false;if(!y)return;const v=parseInt(y,10);
+ if(v>=1&&v<=TOTAL){select(v,1,true);toast(owner[v]===null?`Le KM ${v} existe, et il est libre !`:`Le KM ${v} est déjà pris… essayez « Prochain libre »`);} else toast(`Pas de KM ${y} : le parcours fait ${fmt(TOTAL)} km`);};
+function spin(target){let i=0;const f=freeList();const t=setInterval(()=>{select(f[Math.floor(Math.random()*f.length)],null,false);if(++i>14){clearInterval(t);select(target,null,true);toast(`Le hasard a choisi le KM ${fmt(target)} !`);}},60);}
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2800);}
+$('go').href=C.leetchi;
+
+/* ---------- reservation ---------- */
+let done=null;
+function showForm(){if(!done)return;done=null;$('okBox').hidden=true;$('formBox').hidden=false;}
+const lbl=(a,b)=>a===b?`KM ${a}`:`KM ${a} à ${b}`;
+$('bRes').onclick=async()=>{
+ const [a,b]=sel; if(owner[a]!==null) return;
+ const nom=$('fNom').value.trim(), mail=$('fMail').value.trim(), msg=$('fMsg').value.trim(), anon=$('fAnon').checked;
+ $('fNom').classList.toggle('err',!nom); const mailOk=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail); $('fMail').classList.toggle('err',LIVE&&!mailOk);
+ if(!nom){toast('Indiquez le nom à afficher');$('fNom').focus();return;}
+ if(LIVE&&!mailOk){toast('Indiquez un e-mail valide pour qu\'on puisse vous confirmer');$('fMail').focus();return;}
+ let res={ok:true};
+ if(LIVE){$('bRes').disabled=true;$('bRes').textContent='Réservation…';
+  try{res=await apiReserve({nom,email:mail,message:msg,de:a,a:b,afficher:anon?'non':'oui'});}catch(e){res={ok:false,err:'Connexion impossible, réessayez dans un instant.'};}
+  $('bRes').disabled=false;}
+ if(!res.ok){toast(res.err||'Réservation impossible');await refresh();return;}
+ if(HA&&res.redirectUrl){const pend={resa:res.resa,a,b,nom,anon};try{localStorage.setItem('4l_pending',JSON.stringify(pend));}catch(e){}
+  if(DEMO){await refresh();simHA(pend);return;}
+  $('bRes').textContent='Redirection vers HelloAsso…';$('bRes').disabled=true;
+  try{window.top.location.href=res.redirectUrl;}catch(e){location.href=res.redirectUrl;}return;}
+ done={a,b,nom:anon?'Anonyme':nom,certNom:nom};
+ if(LIVE) await refresh();
+ $('formBox').hidden=true;$('okBox').hidden=false;
+ $('okT').innerHTML=LIVE?`<em>✓</em> ${lbl(a,b)} réservé !`:`${lbl(a,b)}, c'est noté !`;
+ $('okP').textContent=LIVE?`Il est bloqué 72 h à votre nom. Dernière étape : votre don de ${eur((b-a+1)*C.prixKm)} sur Leetchi. Dès réception, votre kilomètre passe en orange.`:`Faites votre don de ${eur((b-a+1)*C.prixKm)} sur Leetchi : votre nom apparaît sur la carte sous 48 h.`;
+ $('code').textContent=`${lbl(a,b)} · ${nom}`;
+ confetti();select(a,null,false,true);
+};
+function showPaid(p){done={a:p.a,b:p.b,nom:p.anon?'Anonyme':p.nom,certNom:p.nom};
+ $('formBox').hidden=true;$('okBox').hidden=false;$('go').style.display='none';$('code').parentElement.style.display='none';
+ $('okT').innerHTML=`<em>✓</em> Merci ${esc(p.nom)} !`;
+ $('okP').textContent=`Le ${lbl(p.a,p.b)} est à vous : il est déjà en orange sur la carte. Téléchargez votre certificat et partagez-le en story !`;
+ confetti();setTimeout(()=>{const r=$('okBox').getBoundingClientRect();if(r.top<70||r.bottom>innerHeight)window.scrollBy({top:r.top-90,behavior:'smooth'});},50);}
+function simHA(p){const m=$('haSim');m.style.display='grid';$('haItem').textContent=`Parrainage du ${lbl(p.a,p.b).replace('KM','km')} — La 4L Sans Freins`;$('haAmt').textContent=eur((p.b-p.a+1)*C.prixKm);
+ $('haPay').onclick=async()=>{m.style.display='none';const e=DEMO_DB.find(x=>x.resa===p.resa);if(e){e.statut='valide';e.date=Date.now();}await refresh();select(p.a,null,false,true);showPaid(p);};
+ $('haCancel').onclick=async()=>{m.style.display='none';await apiCall('annuler',p.resa);await refresh();toast('Paiement annulé : le kilomètre est de nouveau libre.');};}
+async function handleReturn(){const st=qs.get('paiement'),resa=qs.get('resa');if(!st||!resa)return false;
+ let p=null;try{p=JSON.parse(localStorage.getItem('4l_pending')||'null');}catch(e){}
+ try{history.replaceState(null,'',location.pathname+location.hash);}catch(e){}
+ if(st!=='ok'){try{await apiCall('annuler',resa);}catch(e){}await refresh();toast('Paiement annulé : le kilomètre est de nouveau libre.');return false;}
+ $('choisir').scrollIntoView();$('formBox').hidden=true;$('okBox').hidden=false;$('go').style.display='none';$('code').parentElement.style.display='none';
+ $('okT').textContent='Vérification du paiement…';$('okP').textContent='Quelques secondes, on confirme avec HelloAsso.';
+ for(let i=0;i<10;i++){let v={};try{v=await apiCall('verifier',resa);}catch(e){}
+  if(v.paye){await refresh();const P0=P.find(x=>p&&x.de===p.a);p=p&&p.resa===resa?p:{a:P0?P0.de:selKm,b:P0?P0.a:selKm,nom:P0?P0.nom:'',anon:false};select(p.a,null,true,true);showPaid(p);try{localStorage.removeItem('4l_pending');}catch(e){}return true;}
+  await new Promise(r=>setTimeout(r,3000));}
+ $('okT').textContent='Paiement en cours de traitement';$('okP').textContent='HelloAsso confirme votre paiement : votre kilomètre passera en orange automatiquement d\'ici quelques minutes. Vous recevez aussi un reçu par e-mail.';return true;}
+$('bAgain').onclick=()=>{done={};showForm();$('go').style.display='';$('code').parentElement.style.display='';select(selKm,null,false);};
+$('bCopy').onclick=()=>{const t=$('code').textContent;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('Message copié !'),()=>toast(t));};
+$('bShare').onclick=async()=>{const d=done||{a:sel[0],b:sel[1]};const url=location.href.split('#')[0].split('?')[0]+'#km'+d.a;
+ const text=`J'ai parrainé le ${lbl(d.a,d.b)} de La 4L Sans Freins entre Biarritz et Marrakech ! Choisis le tien :`;
+ try{if(navigator.share){await navigator.share({title:'Parrainez un kilomètre',text,url});return;}}catch(e){return;}
+ try{await navigator.clipboard.writeText(text+' '+url);toast('Lien copié, il ne reste qu\'à le coller !');}catch(e){toast(url);}};
+$('bCert').onclick=()=>{const d=done&&done.a?done:{a:sel[0],b:sel[1],certNom:$('fNom').value.trim()||'Votre nom'};cert(d.a,d.b,d.certNom);};
+
+/* ---------- certificate (1080x1350, format Instagram) ---------- */
+function cert(a,b,nom){
+ const cv=document.createElement('canvas');cv.width=1080;cv.height=1350;const x=cv.getContext('2d');
+ x.fillStyle='#2b1410';x.fillRect(0,0,1080,1350);
+ const gr=x.createRadialGradient(760,760,40,760,760,620);gr.addColorStop(0,'rgba(200,100,63,.35)');gr.addColorStop(1,'rgba(200,100,63,0)');x.fillStyle=gr;x.fillRect(0,0,1080,1350);
+ x.strokeStyle='#57352c';x.lineWidth=3;x.strokeRect(36,36,1008,1278);
+ // mini map
+ const S=.46,OX=560,OY=290;const clip=()=>{x.beginPath();x.roundRect(OX+18,OY+10,442,560,26);};x.save();clip();x.fillStyle='#22100c';x.fill();x.clip();x.translate(OX,OY);x.scale(S,S);
+ x.fillStyle='#46261d';x.strokeStyle='#6b4334';x.lineWidth=1.5/S;G.countries.forEach(c=>{const p=new Path2D(c.d);x.fill(p);x.stroke(p);});
+ x.restore();x.save();clip();x.clip();x.translate(OX,OY);x.scale(S,S);
+ x.strokeStyle='#e8d4b8';x.lineWidth=3/S;x.lineJoin='round';x.lineCap='round';x.stroke(new Path2D('M'+R.map(r=>r[0]+','+r[1]).join('L')));
+ x.strokeStyle='#ff8a57';x.lineWidth=14/S;x.shadowColor='rgba(255,138,87,.9)';x.shadowBlur=18;x.stroke(new Path2D(rangeD(a,b)));
+ const p=ptAt((a-.5)*SC);x.shadowBlur=0;x.fillStyle='#fff';x.beginPath();x.arc(p[0],p[1],9/S,0,7);x.fill();x.strokeStyle='#c8643f';x.lineWidth=4/S;x.stroke();
+ x.restore();clip();x.strokeStyle='#6b4334';x.lineWidth=2;x.stroke();
+ x.fillStyle='#c8643f';x.font='22px JM';x.fillText('CERTIFICAT DE PARRAINAGE',84,128);
+ x.fillStyle='#f5ebd9';x.font='800 64px BG';x.fillText('La 4L Sans Freins',84,200);
+ x.fillStyle='#e8d4b8';x.font='500 30px BG';x.fillText('4L Trophy 2027 · Biarritz → Marrakech',84,248);
+ x.fillStyle='#c8643f';x.font=`800 ${a===b?190:120}px BG`;x.fillText(a===b?`KM ${fmt(a)}`:`KM ${fmt(a)}–${fmt(b)}`,76,1010);
+ x.fillStyle='#e8d4b8';x.font='500 32px BG';x.fillText(whereTxt(a)+' · '+country(a),84,1066);
+ x.fillStyle='#b89a86';x.font='24px JM';x.fillText('PARRAINÉ PAR',84,1146);
+ let fs=78;x.font=`800 ${fs}px BG`;while(x.measureText(nom).width>900&&fs>30){fs-=4;x.font=`800 ${fs}px BG`;}
+ x.fillStyle='#f5ebd9';x.fillText(nom,84,1146+fs+6);
+ x.fillStyle='#b89a86';x.font='20px JM';x.fillText('@4LSANSFREINS · MERCI POUR LA ROUTE',84,1290);
+ const url=cv.toDataURL('image/png');const l=document.createElement('a');l.href=url;l.download=`certificat_km${a}.png`;document.body.appendChild(l);l.click();l.remove();
+ let w=document.getElementById('certPrev');if(!w){w=document.createElement('div');w.id='certPrev';w.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:70;display:grid;place-items:center;padding:20px;cursor:zoom-out';w.onclick=()=>w.remove();document.body.appendChild(w);}
+ w.innerHTML=`<div style="text-align:center"><img src="${url}" style="max-height:80vh;max-width:90vw;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.6)"><p style="margin-top:12px;color:#e8d4b8;font-size:14px">Image téléchargée (sinon : appui long / clic droit pour l'enregistrer). Parfait pour une story !</p></div>`;}
+
+/* ---------- confetti ---------- */
+function confetti(){const c=$('confetti'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const cols=['#c8643f','#ff8a57','#f5ebd9','#f2b544','#e8d4b8'];
+ const ps=Array.from({length:150},()=>({x:innerWidth/2+(Math.random()-.5)*200,y:innerHeight*.45,vx:(Math.random()-.5)*16,vy:-Math.random()*16-4,r:Math.random()*7+4,c:cols[Math.random()*5|0],a:Math.random()*6,va:(Math.random()-.5)*.4}));
+ let f=0;const step=()=>{x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.vy+=.45;p.x+=p.vx;p.y+=p.vy;p.vx*=.99;p.a+=p.va;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore();});if(++f<150)requestAnimationFrame(step);else x.clearRect(0,0,c.width,c.height);};step();}
+
+/* ---------- data rendering (map, stats, wall, live) ---------- */
+$('kmTotalTxt').textContent=fmt(TOTAL);$('barEnd').textContent='Marrakech · km '+fmt(TOTAL);
+function count(id,to,suf=''){if(!firstRender){$(id).textContent=fmt(to)+suf;return;}const t0=performance.now();const f=n=>{const k=Math.min(1,(n-t0)/1400);$(id).textContent=fmt(Math.round(to*(1-Math.pow(1-k,3))))+suf;if(k<1)requestAnimationFrame(f);};requestAnimationFrame(f);}
+function ago(t){if(!t)return'';const m=Math.round((Date.now()-new Date(t).getTime())/6e4);if(m<1)return"à l'instant";if(m<60)return`il y a ${m} min`;const h=Math.round(m/60);if(h<24)return`il y a ${h} h`;const d=Math.round(h/24);return`il y a ${d} jour${d>1?'s':''}`;}
+let liveT,liveI=0;
+function renderData(){
+ const g=$('gSpons');g.innerHTML='';P.forEach((p,i)=>{const e=el('path',{d:rangeD(p.de,p.a),class:'spons'+(p.statut==='valide'?'':' res')},g);e.dataset.i=i;});
+ const nV=P.filter(p=>p.statut==='valide').length;
+ count('sKm',taken);count('sEur',taken*C.prixKm,' €');count('sPar',nV);count('sLeft',TOTAL-taken-reserved);
+ const pct=taken/TOTAL*100,pr=(taken+reserved)/TOTAL*100;$('barPct').textContent=(pct<1&&pct>0?pct.toFixed(1):Math.round(pct))+' % parrainés'+(reserved?` · ${fmt(reserved)} km réservés`:'');
+ setTimeout(()=>{$('barFill').style.width=Math.max(pct,0)+'%';$('barCar').style.left=`max(23px, ${pct}%)`;},firstRender?300:0);
+ wall($('q').value);
+ // live feed
+ const ev=P.filter(p=>p.date).sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,6);
+ clearInterval(liveT);const show=()=>{if(!ev.length)return;const p=ev[liveI++%ev.length];const m=$('liveMsg');m.style.opacity=0;setTimeout(()=>{m.innerHTML=`<b>${esc(p.nom)}</b> ${p.statut==='valide'?'a parrainé':'vient de réserver'} le ${lbl(p.de,p.a).replace('KM','km')} · <span style="color:var(--mute)">${ago(p.date)}</span>`;m.style.opacity=1;},350);};
+ show();liveT=setInterval(show,4500);
+ $('sync').textContent=LIVE&&lastSync?'● Synchro '+lastSync.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):'';
+ if(!firstRender)select(selKm,null,false,true);
+ firstRender=false;
+}
+
+/* ---------- stages ---------- */
+const ST=[['Biarritz','Le départ','Plus de 1 000 4L s\'élancent du Pays basque. Les premiers kilomètres, les plus émouvants.'],
+ ['Madrid','La traversée de l\'Espagne','Le plateau castillan, des lignes droites à perte de vue et un moteur de 34 chevaux à fond.'],
+ ['Algésiras','Le détroit','Les 4L embarquent sur le ferry : quelques kilomètres en mer, entre l\'Europe et l\'Afrique.'],
+ ['Merzouga','Le désert','Les dunes de l\'Erg Chebbi, la piste, l\'ensablement garanti et l\'entraide entre équipages.'],
+ ['Ouarzazate','La vallée des kasbahs','Les gorges du Dadès, la route des mille kasbahs et les premiers paysages de cinéma.'],
+ ['Marrakech','L\'arrivée','La ligne d\'arrivée, la remise des dons et la fierté d\'avoir tout fait sans freins.']];
+ST.forEach(([town,tt,txt],i)=>{const b=document.createElement('button');b.className='stage';const km=Math.max(1,G.townKm[town]);
+ b.innerHTML=`<div class="mono">Étape ${i+1} · km ${fmt(km)}</div><h3>${tt}</h3><p>${txt}</p>`;
+ b.onclick=()=>{$('choisir').scrollIntoView({behavior:'smooth'});setTimeout(()=>select(km,null,true),350);};$('stages').appendChild(b);});
+
+/* ---------- wall ---------- */
+function wall(q=''){const w=$('wall');w.innerHTML='';q=q.trim().toLowerCase();
+ if(!P.length){w.style.display='block';w.innerHTML=`<div class="empty"><b>Le mur est encore vide.</b>Le premier nom affiché ici, ce sera peut-être le vôtre.<br><br><a class="cta small" href="#choisir">Parrainer le premier kilomètre</a></div>`;return;}
+ w.style.display='';const qn=parseInt(q,10);
+ const list=P.map((p,i)=>({...p,i})).filter(p=>!q||p.nom.toLowerCase().includes(q)||(qn&&qn>=p.de&&qn<=p.a)).sort((a,b)=>(a.statut===b.statut?0:a.statut==='valide'?-1:1)||(b.a-b.de)-(a.a-a.de)||a.de-b.de);
+ if(!list.length){w.innerHTML='<p style="color:var(--mute)">Aucun parrain ne correspond.</p>';return;}
+ list.forEach(p=>{const c=document.createElement('button');c.className='wcard';const n=p.a-p.de+1;
+  c.innerHTML=`<span class="mono">${n>1?`KM ${fmt(p.de)} → ${fmt(p.a)} · ${n} km`:`KM ${fmt(p.de)}`}</span><b>${esc(p.nom)}${p.statut==='valide'?'':'<span class="badge">RÉSERVÉ</span>'}</b>${p.message?`<p>« ${esc(p.message)} »</p>`:''}`;
+  c.onclick=()=>{$('choisir').scrollIntoView({behavior:'smooth'});setTimeout(()=>select(p.de,null,true),350);};w.appendChild(c);});}
+$('q').addEventListener('input',e=>wall(e.target.value));
+
+/* ---------- links ---------- */
+$('brandlink').href=C.site;$('fsite').href=C.site;$('fig').href=C.instagram;$('fmail').href='mailto:'+C.email;$('mail').href='mailto:'+C.email;$('mail').textContent=C.email;
+if(DEMO)$('demo').hidden=false;
+if(!LIVE){$('fMail').style.display='none';$('fAnon').parentElement.style.display='none';}
+function applyMode(){
+ if(HA){$('payNote').style.display='';$('payNote').innerHTML='🔒 Paiement sécurisé par <b>HelloAsso</b>, la plateforme de paiement des associations. Votre kilomètre est bloqué à votre nom pendant le paiement.';
+  $('st2t').textContent='Payez en ligne';$('st2p').textContent='Paiement sécurisé par HelloAsso, la plateforme de paiement des associations. Votre kilomètre est bloqué à votre nom le temps du paiement.';}
+ else{$('payNote').style.display=LIVE?'':'none';$('payNote').innerHTML='Votre kilomètre est bloqué 72 h à votre nom, le temps de faire votre don sur notre cagnotte Leetchi.';
+  $('st2t').textContent='Réservez, puis participez';$('st2p').textContent='Votre kilomètre est bloqué 72 h à votre nom. Faites votre don sur notre cagnotte Leetchi en indiquant votre kilomètre dans le message.';}
+}
+applyMode();
+
+/* ---------- start ---------- */
+routeEls.forEach(p=>{const L=p.getTotalLength();if(!p.classList.contains('ferry')&&!p.classList.contains('piste')){p.style.strokeDasharray=L;p.style.strokeDashoffset=L;p.style.transition='stroke-dashoffset 2.2s cubic-bezier(.4,0,.2,1)';requestAnimationFrame(()=>requestAnimationFrame(()=>p.style.strokeDashoffset=0));}});
+setTimeout(()=>routeEls.forEach(p=>{p.style.strokeDasharray='';}),2500);
+$('gSpons').style.opacity=0;$('gSpons').style.transition='opacity 1s';setTimeout(()=>$('gSpons').style.opacity=1,1600);
+setData(STATIC);renderData();firstRender=true;
+refresh().then(async()=>{const h=location.hash.match(/^#km(\d+)/);const startKm=h?+h[1]:(()=>{const f=freeList();return f.length?f[0]:1})();setTimeout(()=>select(startKm,1,!!h,true),h?300:1800);if(LIVE)await handleReturn();});
+if(LIVE&&!DEMO)setInterval(()=>{if(!document.hidden)refresh();},45000);
+clampVB();setVB();
+})();
+</script>
+</body>
+</html>
