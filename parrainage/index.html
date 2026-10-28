@@ -309,8 +309,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <details><summary>À quoi sert l'argent ?</summary><p>À financer notre participation au 4L Trophy 2027 : l'achat et la préparation de nos deux 4L, « La Téméraire » et « La Dôdin », l'inscription au raid, le carburant, les péages et le matériel. Le 4L Trophy achemine aussi des fournitures scolaires et sportives pour des enfants au Maroc.</p></details>
   <details><summary>Je peux offrir un kilomètre à quelqu'un ?</summary><p>Bien sûr. Indiquez simplement son nom dans le message de votre participation : c'est son nom qui apparaîtra sur la carte. Idée cadeau : le km correspondant à son année de naissance.</p></details>
   <details><summary>Mon kilomètre est déjà pris, je fais comment ?</summary><p>Chaque kilomètre n'a qu'un parrain. Le bouton « Prochain libre » vous propose le plus proche disponible. Un km réservé (en jaune) qui n'est pas payé redevient libre automatiquement.</p></details>
-  <details><summary>Les entreprises peuvent participer ?</summary><p>Oui, et un tronçon entier (50 km, une ville, la traversée du détroit…) fait un très joli clin d'œil. Pour un partenariat avec logo sur les voitures, écrivez-nous à <a id="mail" href="#"></a>.</p></details>
-  <details><summary>Ai-je droit à un reçu fiscal ?</summary><p>Non : notre association n'est pas reconnue d'intérêt général, nous ne pouvons donc pas délivrer de reçu fiscal. Les entreprises peuvent en revanche passer par un contrat de sponsoring.</p></details>
+  <details><summary>Je suis une entreprise, je peux parrainer un kilomètre ?</summary><p>Le parrainage de kilomètres est réservé aux dons des particuliers. Les entreprises nous soutiennent par le sponsoring (logo sur les voitures, visibilité sur nos réseaux) : écrivez-nous à <a id="mail" href="#"></a>.</p></details>
+  <details><summary>Ai-je droit à un reçu fiscal ?</summary><p>Non : notre association n'est pas reconnue d'intérêt général, nous ne pouvons donc pas délivrer de reçu fiscal.</p></details>
   <details><summary>Le tracé est-il exact ?</summary><p>Il est indicatif : il est calculé sur le réseau routier et suit les grandes étapes du raid. L'itinéraire officiel est communiqué par l'organisation peu avant le départ.</p></details>
  </section>
 </main>
@@ -343,7 +343,7 @@ let P=[], owner=new Array(TOTAL+1).fill(null), taken=0, reserved=0, lastSync=nul
 const norm=st=>p=>({nom:String(p.nom||'Anonyme'),message:p.message||'',de:Math.max(1,Math.round(+p.de)),a:Math.min(TOTAL,Math.round(+(p.a??p.de))),statut:p.statut||st,date:p.date||null});
 const STATIC=(C.parrains||[]).map(norm('valide'));
 const H=3600e3, now=Date.now();
-let DEMO_DB=[{nom:'Famille Lorne',de:1,a:40,message:'Bon vent les jeunes !',statut:'valide',date:now-50*H},{nom:'Garage du Coin',de:400,a:449,statut:'valide',date:now-30*H},{nom:'Mamie Jacqueline',de:1948,a:1948,message:'Mon année !',statut:'valide',date:now-20*H},{nom:'Les potes du RCO',de:1095,a:1124,message:'Le détroit est à nous',statut:'valide',date:now-9*H},{nom:'Julie',de:2002,a:2002,statut:'reserve',date:now-3*H},{nom:'Boulangerie Martin',de:1880,a:1929,statut:'valide',date:now-6*H},{nom:'Thomas & Léa',de:2500,a:2514,statut:'reserve',date:now-.4*H,message:'On vous attend à Marrakech'}];
+let DEMO_DB=[{nom:'Famille Lorne',de:1,a:40,message:'Bon vent les jeunes !',statut:'valide',date:now-50*H},{nom:'Tonton Pierre',de:400,a:449,statut:'valide',date:now-30*H},{nom:'Mamie Jacqueline',de:1948,a:1948,message:'Mon année !',statut:'valide',date:now-20*H},{nom:'Les potes du RCO',de:1095,a:1124,message:'Le détroit est à nous',statut:'valide',date:now-9*H},{nom:'Julie',de:2002,a:2002,statut:'reserve',date:now-3*H},{nom:'Famille Martin',de:1880,a:1929,statut:'valide',date:now-6*H},{nom:'Thomas & Léa',de:2500,a:2514,statut:'reserve',date:now-.4*H,message:'On vous attend à Marrakech'}];
 function setData(list){P=list.filter(p=>p.a>=p.de);owner.fill(null);P.forEach((p,i)=>{for(let k=p.de;k<=p.a;k++)if(owner[k]===null)owner[k]=i;});
  taken=0;reserved=0;for(let k=1;k<=TOTAL;k++){const o=owner[k];if(o!==null){if(P[o].statut==='valide')taken++;else reserved++;}}}
 async function fetchRemote(){if(DEMO)return DEMO_DB.map(norm('reserve'));if(!C.apiUrl)return [];
@@ -513,7 +513,7 @@ function select(km,n,fly,keep){
  document.querySelectorAll('.pack').forEach(p=>p.classList.toggle('on',+p.dataset.n===selN));
  $('tot').textContent=o===null?eur(cnt*C.prixKm):'—';
  $('bRes').disabled=o!==null;$('bRes').style.opacity=o===null?1:.45;
- $('bRes').textContent=o!==null?'Kilomètre indisponible':HA?`Payer ${eur(cnt*C.prixKm)} avec HelloAsso →`:LIVE?(cnt>1?`Réserver ces ${cnt} km →`:'Réserver ce kilomètre →'):'Parrainer ce kilomètre →';
+ $('bRes').textContent=o!==null?'Kilomètre indisponible':HA?`Donner ${eur(cnt*C.prixKm)} avec HelloAsso →`:LIVE?(cnt>1?`Réserver ces ${cnt} km →`:'Réserver ce kilomètre →'):'Parrainer ce kilomètre →';
  const g=$('gSel');g.innerHTML='';el('path',{d:rangeD(a,b),class:'sel'},g);
  const p=ptAt((a-.5)*SC); const car=$('gCar'); car.setAttribute('transform',`translate(${p[0]},${p[1]})`);car.setAttribute('opacity',1);
  if(fly){flyTo(p[0],p[1],Math.min(vb.w,320));}
