@@ -5,7 +5,7 @@
      { nom: "Garage Martin", de: 400, a: 449, message: "Bonne route !" },
    ===================================================================== */
 window.PARRAINAGE = {
-  prixKm: 5,                                   // prix d'un kilomètre en euros
+  prixKm: 2,                                   // prix d'un kilomètre en euros
   leetchi: "https://www.leetchi.com/fr/c/4lsansfreins-4189768",
   site: "../",
   instagram: "https://www.instagram.com/4lsansfreins/",
